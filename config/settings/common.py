@@ -28,7 +28,11 @@ DJANGO_APPS = (
     # Admin
     'django.contrib.admin',
 )
-THIRD_PARTY_APPS = ()
+THIRD_PARTY_APPS = (
+    'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
+)
 
 LOCAL_APPS = (
     'moviesapp.movies.apps.MoviesConfig',
@@ -86,6 +90,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(APPS_DIR, 'templates/'),
+            os.path.join(ROOT_DIR, 'ui/build'),
         ],
         'OPTIONS': {
             'debug': DEBUG,
@@ -111,6 +116,7 @@ STATIC_ROOT = os.path.join(ROOT_DIR, 'staticfiles/')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(APPS_DIR, 'static/'),
+    os.path.join(ROOT_DIR, 'ui/build/static'),
 )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -145,3 +151,16 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ADMIN_URL = 'admin/'
+
+# Hide the Browsable API
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+}

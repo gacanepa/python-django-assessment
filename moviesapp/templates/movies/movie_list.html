@@ -1,11 +1,19 @@
-{% extends 'base.html' %} {% load static i18n %} {% block title %}{% trans
-'Movies' %}{% endblock %} {% block content %}
+{% extends 'base.html' %} 
+{% load static i18n %} 
+{% block title %}
+  {% trans 'Movies' %}
+{% endblock %} 
+{% block content %}
 <h3>{% trans 'Movies' %}</h3>
 <table class="table table-striped">
   <thead>
     <tr>
-      <!-- TODO: Add table columns -->
-      <th colspan="2"><b>Action</b></th>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Released on</th>
+      <th>Votes</th>
+      <th>Stars</th>
+      <th colspan="2" class="text-center"><strong>Action</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -15,13 +23,15 @@
         <a href="{{ movie.get_absolute_url }}">{{ movie.pk }}</a>
       </td>
       <td>{{ movie.title }}</td>
-      <!-- TODO: Render more movie properties and make sure action links work -->
-      <td><a href="{% url 'movie:update' movie.pk %}">Edit</a></td>
-      <td><a href="{% url 'movie:delete' movie.pk %}">Delete</a></td>
+      <td>{{ movie.released_on }}</td>
+      <td>{{ movie.num_votes }}</td>
+      <td>{{ movie.avg_rating }}</td>
+      <td class="text-center"><a href="{% url 'movies:update' movie.pk %}">Edit</a></td>
+      <td class="text-center"><a href="{% url 'movies:delete' movie.pk %}">Delete</a></td>
     </tr>
     {% endfor %}
     <tr>
-      <td colspan="6"><a href="{% url 'movie:create' %}">Add new movie</a></td>
+      <td colspan="6"><a href="{% url 'movies:create' %}">Add new movie</a></td>
     </tr>
   </tbody>
 </table>
